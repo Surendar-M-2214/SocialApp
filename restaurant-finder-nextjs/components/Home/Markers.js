@@ -4,6 +4,8 @@ import BusinessItem from './BusinessItem'
 import { SelectedBusinessContext } from '@/context/SelectedBusinessContext'
 
 function Markers({business}) {
+  const GOOGLE_API_KEY=process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
+  const photo_ref=business?.photos?business?.photos[0]?.photo_reference:''
     const {selectedBusiness,setSelectedBusiness}=useContext(SelectedBusinessContext)
   return (
     <div>
@@ -11,11 +13,17 @@ function Markers({business}) {
                 position={business.geometry.location}
                 onClick={()=>setSelectedBusiness(business)}
                 icon={{
-                  url:'/circle.png',
+
+                  url: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_ref}&key=${GOOGLE_API_KEY}`,
                   scaledSize:{
-                    width:10,
-                    height:10
+                    width:50,
+                    height:50,
+                   
                   }
+                  
+       
+
+
                 }}
                 
         >
